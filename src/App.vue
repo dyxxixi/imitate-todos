@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { newTodoRef, addTodo } from "./composition/useNewTodo"
 
 </script>
 
@@ -6,7 +7,7 @@
   <div class="todoapp">
     <header class="header">
       <h1>任务清单</h1>
-      <input class="new-todo" placeholder="需要做什么？">
+      <input class="new-todo" placeholder="需要做什么？" v-model="newTodoRef" @keyup.enter="addTodo">
     </header>
     <main class="main">
       <input id="toggle-all" class="toggle-all" type="checkbox">
