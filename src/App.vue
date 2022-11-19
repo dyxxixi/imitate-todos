@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { newTodoRef, addTodo } from "./composition/useNewTodo"
+import { visibilityRef, onHashChange, filteredTodosRef, remainingRef, completedRef } from "./composition/useFilter"
+import { onMounted, onUnmounted } from "vue"
+onMounted(() => {
+  window.addEventListener("hashchange", onHashChange)
+})
 
+onUnmounted(() => {
+  window.removeEventListener("hashchange", onHashChange)
+})
 </script>
 
 <template>
@@ -13,18 +21,10 @@ import { newTodoRef, addTodo } from "./composition/useNewTodo"
       <input id="toggle-all" class="toggle-all" type="checkbox">
       <label for="toggle-all">全部标记为完成</label>
       <ul class="todo-list">
-        <li class="todo">
+        <li class="todo" :class="{ completed: todo.completed }" v-for="todo in filteredTodosRef" :key="todo.id">
           <div class="view">
-            <input class="toggle" type="checkbox">
-            <label>coding</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" type="text">
-        </li>
-        <li class="todo">
-          <div class="view">
-            <input class="toggle" type="checkbox">
-            <label>coding</label>
+            <input class="toggle" type="checkbox" v-model="todo.completed">
+            <label>{{ todo.title }}</label>
             <button class="destroy"></button>
           </div>
           <input class="edit" type="text">
@@ -37,18 +37,18 @@ import { newTodoRef, addTodo } from "./composition/useNewTodo"
           剩下
         </span>
         <strong>
-          1
+          {{ remainingRef }}
         </strong>
         <span>
           个任务
         </span>
       </span>
       <ul class="filters">
-        <li><a href="#/all" class="selected">全部</a></li>
-        <li><a href="#/active">未完成</a></li>
-        <li><a href="#/completed">已完成</a></li>
+        <li><a href="#/all" :class="{ selected: visibilityRef === 'all' }">全部</a></li>
+        <li><a href="#/active" :class="{ selected: visibilityRef === 'active' }">未完成</a></li>
+        <li><a href="#/completed" :class="{ selected: visibilityRef === 'completed' }">已完成</a></li>
       </ul>
-      <button class="clear-completed">清除已完成</button>
+      <button class="clear-completed" v-show="completedRef > 0">清除已完成</button>
     </footer>
   </div>
 </template>

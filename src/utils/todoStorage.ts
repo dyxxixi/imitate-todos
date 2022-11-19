@@ -1,4 +1,5 @@
 const LOCAL_KEY = "todomvc"
+import { ITodo } from "../types"
 
 /**
  * 获取目前所有的任务
@@ -25,8 +26,20 @@ function generateId() {
   return Date.now() + Math.random().toString(16).substring(2, 4)
 }
 
+function filterTodos(todos: Array<ITodo>, visibility = "all") {
+  if (visibility === "all") {
+    return todos
+  } else if (visibility === "active") {
+    return todos.filter(it => !it.completed)
+  } else if (visibility === "completed") {
+    return todos.filter(it => it.completed)
+  }
+  throw new Error("invalid visibility value")
+}
+
 export {
   fetch,
   save,
-  generateId
+  generateId,
+  filterTodos
 }
