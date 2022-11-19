@@ -1,10 +1,10 @@
-const LOCAL_KEY = "todomvc"
+const LOCAL_KEY: string = "todomvc"
 import { ITodo } from "../types"
 
 /**
  * 获取目前所有的任务
  */
-function fetch() {
+function fetch(): ITodo[] {
   const result = localStorage.getItem(LOCAL_KEY)
   if (result) {
     return JSON.parse(result)
@@ -15,8 +15,8 @@ function fetch() {
 /**
  * 保存所有任务
  */
-function save(todo: Object) {
-  localStorage.setItem(LOCAL_KEY, JSON.stringify(todo))
+function save(todos: ITodo[]) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(todos))
 }
 
 /**

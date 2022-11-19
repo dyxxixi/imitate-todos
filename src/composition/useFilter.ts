@@ -1,14 +1,15 @@
-import { ref, computed } from "vue"
+import { ref, computed, Ref, ComputedRef } from "vue"
+import { ITodo } from "../types";
 import { filterTodos } from "../utils/todoStorage";
 import { todosRef } from "./useTodoList";
 
-const visibilityRef = ref("all")
+const visibilityRef: Ref<string> = ref("all")
 /**
  * hash变化后执行
  */
 function onHashChange() {
-  const validHash = ["all", "active", "completed"]
-  const hash = location.hash.replace(/#\/?/, "")
+  const validHash: string[] = ["all", "active", "completed"]
+  const hash: string = location.hash.replace(/#\/?/, "")
   if (validHash.includes(hash)) {
     //有效的
     visibilityRef.value = hash
@@ -18,15 +19,15 @@ function onHashChange() {
   }
 }
 
-const filteredTodosRef = computed(() => {
+const filteredTodosRef: ComputedRef<ITodo[]> = computed(() => {
   return filterTodos(todosRef.value, visibilityRef.value)
 })
 
-const remainingRef = computed(() => {
+const remainingRef: ComputedRef<number> = computed(() => {
   return filterTodos(todosRef.value, "active").length
 })
 
-const completedRef = computed(() => {
+const completedRef: ComputedRef<number> = computed(() => {
   return filterTodos(todosRef.value, "completed").length
 })
 

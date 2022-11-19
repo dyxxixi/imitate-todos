@@ -1,7 +1,8 @@
-import { ref, watchEffect } from "vue"
+import { Ref, ref, watchEffect } from "vue"
+import { ITodo } from "../types"
 import { fetch, save } from "../utils/todoStorage"
 
-const todosRef = ref(fetch())
+const todosRef: Ref<ITodo[]> = ref(fetch())
 watchEffect(() => {
   save(todosRef.value)
 })

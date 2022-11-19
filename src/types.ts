@@ -1,3 +1,6 @@
-export interface ITodo{
-  [key: string]: any;
+export interface ITodo {
+  id: string,
+  title: string,
+  completed: boolean
 }
+
