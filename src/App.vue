@@ -12,7 +12,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("hashchange", onHashChange)
 })
-</script>
+</script> 
 
 <template>
   <div class="todoapp">
@@ -28,11 +28,11 @@ onUnmounted(() => {
           v-for="todo in filteredTodosRef" :key="todo.id">
           <div class="view">
             <input class="toggle" type="checkbox" v-model="todo.completed">
-            <label @click="editTodo(todo)">{{ todo.title }}</label>
+            <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
             <button @click="remove(todo)" class="destroy"></button>
           </div>
-          <input class="edit" type="text" v-model="todo.title" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)"
-            @keyup.escape="cancelEdit(todo)">
+          <input v-if="todo === editingTodoRef" @vnode-mounted="({ el }: any) => el.focus()" class="edit" type="text"
+            v-model="todo.title" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.escape="cancelEdit(todo)">
         </li>
       </ul>
     </main>
