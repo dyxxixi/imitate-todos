@@ -1,4 +1,4 @@
-const LOCAL_KEY: string = "todomvc"
+const LOCAL_KEY = "todomvc"
 import { ITodo } from "../types"
 
 /**
@@ -26,7 +26,7 @@ function generateId() {
   return Date.now() + Math.random().toString(16).substring(2, 4)
 }
 
-function filterTodos(todos: Array<ITodo>, visibility = "all") {
+function filterTodos(todos: ITodo[], visibility = "all") {
   if (visibility === "all") {
     return todos
   } else if (visibility === "active") {
